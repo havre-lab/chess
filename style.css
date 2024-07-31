@@ -1,0 +1,11 @@
+canvas{
+    border:1px solid black;
+}
+#game-container{
+    display:flex;
+    justify-content:center;
+    
+}
+#assets{
+    display:none;
+}
