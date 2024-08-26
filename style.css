@@ -6,6 +6,11 @@ canvas{
     justify-content:center;
     
 }
+h1{
+    font-family:Calibri;
+    font-size:5em;
+    margin:0px;
+}
 #assets{
     display:none;
 }
