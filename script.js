@@ -40,6 +40,7 @@ var selectedPiece;
 var hoverPositions;
 var winner;
 
+//piece constructor
 class Piece{
     constructor(type,x,y,player){
         this.pieceType=type;
@@ -68,6 +69,7 @@ class Piece{
     }
 }
 
+//draws background
 function drawBackground(){
     ctx.drawImage(background,0,0,width,height)
 }
@@ -89,6 +91,8 @@ function convertPiecesToGrid(){
     }
     return grid;
 }
+
+//checking for check
 function checkForCheck(player){
     var playerKingIndex;
     var playerList;
@@ -124,7 +128,7 @@ function checkForCheck(player){
     return inCheck;
 }
 
-
+//unused
 function checkForKing(){
     whiteKing=false;
     for(let i=0; i<whitePieces.length;i++){
@@ -145,6 +149,8 @@ function checkForKing(){
         winner='white'
     }
 }
+
+//for raycasting pieces like bishop and rook
 function recursiveLineScan(x,y,dx,dy,team){
     var enemyTeam;
     if(team=="white"){
@@ -178,6 +184,7 @@ function recursiveLineScan(x,y,dx,dy,team){
 
 }
 
+//for step pieces like king and knight
 function knightScan(x,y,dx,dy,team){
     var enemyTeam;
     if(team=="white"){
@@ -203,6 +210,8 @@ function knightScan(x,y,dx,dy,team){
     return location;
 
 }
+
+//pawn
 function pawnScan(x,y,team){
     var pawnDirection;
     var startLocation;
@@ -247,7 +256,7 @@ function pawnScan(x,y,team){
 
 }
 
-
+//all of that combined
 function findPieceMoves(player,index){
     var possibleMoves=[];
     var pieceTargetting;
@@ -324,7 +333,7 @@ function findPieceMoves(player,index){
     return possibleMoves;
 }
 
-
+//filtering for check threats
 function filterCheckableLocations(positions,team,index){
     var pieceTargetting;
     var delIndexes=[];
@@ -375,6 +384,7 @@ function filterCheckableLocations(positions,team,index){
     return positions;
 }
 
+//checking for checkmate
 function checkForMate(team){
     var teamList;
     var possibleMoves=[];
@@ -403,6 +413,7 @@ function checkForMate(team){
     }
 }
 
+//mouses down handling
 function handleEventMousedown(event){
     if(event.clientX>canvasSize.left && event.clientX<canvasSize.right 
         && event.clientY>canvasSize.top && event.clientY<canvasSize.bottom
@@ -428,6 +439,8 @@ function handleEventMousedown(event){
 
     }
 }
+
+//mouseup handling
 function handleEventMouseup(event){
     if(event.clientX>canvasSize.left && event.clientX<canvasSize.right 
         && event.clientY>canvasSize.top && event.clientY<canvasSize.bottom
@@ -528,6 +541,8 @@ function handleEventMouseup(event){
     
 }
 
+
+//starting game
 function startGame(){
     playerTurn='white';
     selectedPiece={};
@@ -565,7 +580,7 @@ function startGame(){
     gameLoop=setInterval(gameTick,1000/60);
 }
 
-
+//game tick
 function gameTick(){
     //update Canvas Size
     canvasSize=canvas.getBoundingClientRect();
@@ -593,7 +608,7 @@ function gameTick(){
         blackPieces[i].draw();
     }
     for (let i=0; i<hoverPositions.length; i++){
-        ctx.fillStyle="rgb(100 100 100 / 80%)"
+        ctx.fillStyle="rgb(255 255 0 / 80%)"
         if(playerTurn=='white'){
             ctx.fillRect(hoverPositions[i].x*width/rowSquares,hoverPositions[i].y*height/rowSquares
             ,width/rowSquares,height/rowSquares)
@@ -607,7 +622,7 @@ function gameTick(){
         ctx.fillStyle="rgb(100 100 100 / 70%)"
         ctx.fillRect(0,0,width,height)
         ctx.fillStyle="rgb(255 255 255)"
-        ctx.font=`${width/5}px Helvetica`
+        ctx.font=`${width/5}px Calibri`
         if(winner=='white'){
             ctx.fillText("White Wins!",0,height/2,width)
             title.innerHTML="White Wins! - Chess"
